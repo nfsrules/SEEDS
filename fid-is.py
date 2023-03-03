@@ -31,7 +31,6 @@ def calculate_inception_stats(
     num_workers=3,
     prefetch_factor=2,
     device=torch.device("cuda"),
-    num_splits=10,
 ):
     # Rank 0 goes first
     if dist.get_rank() != 0:
@@ -42,7 +41,6 @@ def calculate_inception_stats(
     detector_url = "https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan3/versions/1/files/metrics/inception-2015-12-05.pkl"
     detector_kwargs = dict(return_features=True)
     detector_kwargs2 = dict(no_output_bias=True)
-    # n_classes = 1008
     feature_dim = 2048
     with dnnlib.util.open_url(
             detector_url,
@@ -71,7 +69,6 @@ def calculate_inception_stats(
     num_batches = (
         (len(dataset_obj) - 1) // (max_batch_size * dist.get_world_size()) + 1
     ) * dist.get_world_size()
-    # dist.print0(f'Number of Processors: {dist.get_world_size()}')
     all_batches = torch.arange(len(dataset_obj)).tensor_split(num_batches)
     rank_batches = all_batches[dist.get_rank()::dist.get_world_size()]
     data_loader = torch.utils.data.DataLoader(

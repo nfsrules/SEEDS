@@ -71,10 +71,6 @@ class ETD_ERK_SOLVER:
                 x_t = std(t) / std(s) * x - self.s(t) * phi_1 * model_s
         else:  # Do nothing
             x_t = x
-            # model_s = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # model_s = n_pred(model_s, x, s)
-            # x_t = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # x_t = x - 2. * (t - s) * model_s
         return x_t
 
     def second_update(self, x, s, t, num_steps, i):
@@ -137,10 +133,6 @@ class ETD_ERK_SOLVER:
                     )
         else:
             x_t = x
-            # model_s = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # model_s = n_pred(model_s, x, s)
-            # x_t = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # x_t = x - 2. * (t - s) * model_s
         return x_t
 
     def third_update(self, x, s, t, num_steps, i):
@@ -239,10 +231,6 @@ class ETD_ERK_SOLVER:
                     )
         else:
             x_t = x
-            # model_s = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # model_s = n_pred(model_s, x, s)
-            # x_t = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # x_t = x - 2. * (t - s) * model_s
         return x_t
 
     def fourth_update(self, x, s, t, num_steps, i):
@@ -313,8 +301,4 @@ class ETD_ERK_SOLVER:
                 print("TBA")
         else:
             x_t = x
-            # model_s = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # model_s = n_pred(model_s, x, s)
-            # x_t = self.net(x / self.s(s), self.sigma(s), self.class_labels).to(torch.float64)
-            # x_t = x - 2. * (t - s) * model_s
         return x_t

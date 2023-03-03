@@ -62,21 +62,12 @@ def sampler(
         )
         / beta_d
     )
-    # marginal_log_mean_coeff: log(alpha_t) for vp depending on the schedule: discrete, linear and cosine
     vp_log_alpha = (
         lambda beta_d, beta_min: lambda t: -0.25 * t**2 * beta_d - 0.5 * t * beta_min
     )
-    # marginal_alpha(t, beta_min, beta_max): alpha_t
-    # vp_alpha = lambda beta_d, beta_min: lambda t: torch.exp(vp_log_alpha(beta_d, beta_min)(t))
-    # marginal_std(t, beta_min, beta_max): bar{sigma_t}
-    vp_std = lambda beta_d, beta_min: lambda t: torch.sqrt(
-        1.0 - torch.exp(2.0 * vp_log_alpha(beta_d, beta_min)(t))
-    )
-    # marginal_lambda: lambda_t
     vp_lambd = lambda beta_d, beta_min: lambda t: vp_log_alpha(beta_d, beta_min)(
         t
     ) - 0.5 * torch.log(1.0 - torch.exp(2.0 * vp_log_alpha(beta_d, beta_min)(t)))
-    # inverse_lambda(lamb, beta_min, beta_max): t_lambda depending on the schedule
     vp_lambd_inv = (
         lambda beta_d, beta_min: lambda lamb: 2.0
         * beta_d
@@ -534,7 +525,6 @@ def main(
 
     # Done.
     torch.distributed.barrier()
-    # dist.print0('Done.')
 
 
 # ----------------------------------------------------------------------------
