@@ -1,5 +1,5 @@
 # SEEDS: A Family of Exponencial SDE Solvers for Fast-High Quality Sampling from Diffusion models
-## Official PyTorch implementation 
+### Official PyTorch implementation 
 
 <p float="left">
   <img src="/assets/grid_celeba.png" width="300" />
