@@ -12,7 +12,7 @@ Abstract: *We introduce SEEDS, a family of training-free exponential SDE solvers
 
 ## License
 
-Part of the code was derived from Karras and Al [Elucidating the Design Space of Diffusion-Based Generative]([http://creativecommons.org/licenses/by-nc-sa/4.0/](https://github.com/NVlabs/edm)
+Part of the code was derived from Karras and Al [Elucidating the Design Space of Diffusion-Based Generative](https://github.com/NVlabs/edm).
 
 All material, including source code and pre-trained models, is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
