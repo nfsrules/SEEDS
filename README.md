@@ -1,4 +1,4 @@
-# SEEDS: A Family of Exponencial SDE Solvers for Fast-High Quality Sampling from Diffusion models
+# SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models
 ## Neurips 2023 accepted paper [[arXiv Link](https://arxiv.org/abs/2305.14267)]
 ### Official PyTorch implementation 
 
