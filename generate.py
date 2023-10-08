@@ -9,6 +9,7 @@ import PIL.Image
 import dnnlib
 from torch_utils import distributed as dist
 
+
 def sampler(
     net, latents, class_labels=None, randn_like=torch.randn_like,
     num_steps=18, sigma_min=None, sigma_max=None, rho=7, sigma_data=None,
@@ -31,18 +32,11 @@ def sampler(
     vp_sigma = lambda beta_d, beta_min: lambda t: (np.e ** (0.5 * beta_d * (t ** 2) + beta_min * t) - 1) ** 0.5
     vp_sigma_deriv = lambda beta_d, beta_min: lambda t: 0.5 * (beta_min + beta_d * t) * (sigma(t) + 1 / sigma(t))
     vp_sigma_inv = lambda beta_d, beta_min: lambda sigma: ((beta_min ** 2 + 2 * beta_d * (sigma ** 2 + 1).log()).sqrt() - beta_min) / beta_d
-    # marginal_log_mean_coeff: log(alpha_t) for vp depending on the schedule: discrete, linear and cosine
     vp_log_alpha = lambda beta_d, beta_min: lambda t: -0.25 * t ** 2 * beta_d - 0.5 * t * beta_min
-    # marginal_alpha(t, beta_min, beta_max): alpha_t
-    # vp_alpha = lambda beta_d, beta_min: lambda t: torch.exp(vp_log_alpha(beta_d, beta_min)(t))
-    # marginal_std(t, beta_min, beta_max): bar{sigma_t}
     vp_std = lambda beta_d, beta_min: lambda t: torch.sqrt(1. - torch.exp(2. * vp_log_alpha(beta_d, beta_min)(t)))
-    # marginal_lambda: lambda_t
     vp_lambd = lambda beta_d, beta_min: lambda t: vp_log_alpha(beta_d, beta_min)(t) - 0.5 * torch.log(1. - torch.exp(2. * vp_log_alpha(beta_d, beta_min)(t)))
-    # inverse_lambda(lamb, beta_min, beta_max): t_lambda depending on the schedule
     vp_lambd_inv = lambda beta_d, beta_min: lambda lamb:  2. * beta_d * torch.logaddexp(-2. * lamb, torch.zeros((1,)).to(lamb)) / (torch.sqrt(beta_min ** 2 + 2. * beta_d * torch.logaddexp(-2. * lamb, torch.zeros((1,)).to(lamb))) + beta_min) / beta_d
     if solver == 'etd-erk':
-        # edm_lambd = lambda t: -torch.log(torch.arctan(t/sigma_d))
         edm_lambd = lambda sigma_d: lambda t: -torch.log(torch.arctan(t/sigma_d))
         edm_lambd_inv = lambda sigma_d: lambda lamb: sigma_d * torch.tan(torch.exp(-lamb))
     elif solver == 'etd-serk':
@@ -51,8 +45,6 @@ def sampler(
     else:
         edm_lambd = None
 
-    
-    
     ve_sigma = lambda t: t.sqrt()
     ve_sigma_deriv = lambda t: 0.5 / t.sqrt()
     ve_sigma_inv = lambda sigma: sigma ** 2
@@ -117,7 +109,6 @@ def sampler(
         lamb = lambda t: - torch.log(t)
         lamb_inv = lambda t: torch.exp(- t)
         
-
     # Define scaling schedule.
     if scaling == 'vp':
         s = lambda t: 1 / (1 + sigma(t) ** 2).sqrt()
@@ -166,18 +157,6 @@ def sampler(
         
         x_next = solver_fn.update(x_hat, t_hat, t_next, num_steps, i=i)
         
-        # Save imgs
-#         #images_np = (x_next * 127.5 + 128).clip(0, 255).to(torch.uint8).permute(0, 2, 3, 1).cpu().numpy()
-#         images_np = x_next.permute(0, 2, 3, 1).cpu().numpy()
-
-#         for image_np in images_np:
-#             #image_path = os.path.join(image_dir, f'{i}.png')
-#             #PIL.Image.fromarray(image_np, 'RGB').save(image_path)
-#             image_path = os.path.join(image_dir, f'{i}.npy')
-#             np.save(image_path, image_np)images = x_next
-#         images_np = (images * 127.5 + 128).clip(0, 255).to(torch.uint8).permute(0, 2, 3, 1).cpu().numpy()
-#         for seed, image_np in 
-            
     return x_next
 
 #----------------------------------------------------------------------------
@@ -277,7 +256,7 @@ def main(network_pkl, outdir, subdirs, seeds, class_idx, max_batch_size, device=
         nfes = nsteps * ords - 1
     else:
         nfes = ords * (nsteps - 1)
-    #dist.print0(f'Ords = {ot}')
+        
     dist.print0(f'NFEs = {nfes}')  
     # Loop over batches.
     dist.print0(f'Generating {len(seeds)} images to "{outdir}"...')
@@ -298,8 +277,6 @@ def main(network_pkl, outdir, subdirs, seeds, class_idx, max_batch_size, device=
             class_labels[:, class_idx] = 1
         # Generate images.
         sampler_kwargs = {key: value for key, value in sampler_kwargs.items() if value is not None}
-        #have_ablation_kwargs = any(x in sampler_kwargs for x in ['solver', 'discretization', 'schedule', 'scaling'])
-        #sampler_fn = ablation_sampler #if have_ablation_kwargs else edm_sampler
         images = sampler(net, latents, class_labels, randn_like=rnd.randn_like, **sampler_kwargs)
 
         # Save images.
