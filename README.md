@@ -1,5 +1,5 @@
 # SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models
-## The official code Neurips 2023 paper [[SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models](https://arxiv.org/abs/2305.14267)]
+### The official code Neurips 2023 of [[SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models](https://arxiv.org/abs/2305.14267)]
 
 <p float="left">
   <img src="/assets/grid_bedroom.png" width="240" />
