@@ -1,5 +1,5 @@
 # SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models
-### The official code Neurips 2023 of [[SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models](https://arxiv.org/abs/2305.14267)]
+### The official code of [SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models](https://arxiv.org/abs/2305.14267) (Neurips 2023).
 
 <p float="left">
   <img src="/assets/grid_bedroom.png" width="240" />
@@ -27,11 +27,15 @@ To reproduce the main results of our article, you can simply run:
 ```.bash
 sh curves.sh
 ```
-After successfully running, the directory [output](./output) contains 100 images sampling from [Flickr-Faces-HQ dataset](https://github.com/NVlabs/ffhq-dataset) of shape 64x64 in the **variance preserving (VP)** setting. You can explore more results by changing the **schedule**, **scaling**, **discretization** scheme or **preconditioning** params. Moreover, you can also choose the solvers as *ETD-ERK* or *ETD-SERK* in low or high orders (`order=1,2,3,4`) such that we have a trade-off between the speed and the image quality.
+After successfully running, the directory [output](./output) contains 100 images sampling from various datasets in the **variance preserving (VP)** setting. You can explore more results by changing the **schedule**, **scaling**, **discretization** scheme or **preconditioning** params. Moreover, you can also choose the solvers as *ETD-ERK* or *ETD-SERK* in low or high orders (`order=1,2,3,4`) such that we have a trade-off between the speed and the image quality.
+
+## More details coming soon!
+Stay tuned for more useful details on how to run this repository.
+
 
 ## License
 
-Part of the code was derived from Karras and Al. [Elucidating the Design Space of Diffusion-Based Generative Models (EDM)](https://github.com/NVlabs/edm) under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+The code is heavily derived from Karras and Al. [Elucidating the Design Space of Diffusion-Based Generative Models (EDM)](https://github.com/NVlabs/edm) under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 All material provided in this repository, including source code and pre-trained models, is therefore licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
@@ -41,3 +45,17 @@ All material provided in this repository, including source code and pre-trained 
 
 `imagenet-64x64-baseline.npz` is derived from the [precomputed reference statistics](https://github.com/openai/guided-diffusion/tree/main/evaluations) by Prafulla Dhariwal and Alex Nichol. The statistics were
 originally shared under the [MIT license](https://github.com/openai/guided-diffusion/blob/main/LICENSE).
+
+
+## Citation
+If you find our work useful, please consider citing:
+
+```
+@inproceedings{Gonzalez2023seeds,
+  author    = {Martin Gonzalez, Nelson Fernandez Pinto, Thuy Tran, Elies Gherbi, Hatem Hajri, Nader Masmoudi},
+  title     = {SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models},
+  booktitle = {Proc. NeurIPS},
+  year      = {2023}
+}
+```
+
