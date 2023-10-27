@@ -1,9 +1,11 @@
 # SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models
 ### The official code of [SEEDS: Exponential SDE Solvers for Fast High-Quality Sampling from Diffusion Models](https://arxiv.org/abs/2305.14267) (Neurips 2023).
 
-<div style="text-align: center;">
-  <img src="/assets/seeds-stable-diffusion-xl.png" width="342" />
-</div>
+<figure style="text-align: center;">
+  <img src="/assets/seeds-stable-diffusion-xl.png" width="612" alt="Image Description" />
+  <figcaption>Image sampled with SEEDS2 from Stable Diffusion XL at 200 NFE.</figcaption>
+</figure>
+
 
 Martin Gonzalez, Nelson Fernandez, Thuy Tran, Elies Gherbi, Hatem Hajri, Nader Masmoudi.
 
